@@ -394,12 +394,17 @@ function Step2() {
     }
     setValue(newValue);
   };
-
+  var temp_pre_meta={};
+  var temp_pre = {};
+  var temp_loss ={};
+  var temp_optimizer ={};
+  var temp_json ={};
+  var hyper ={};
   if (
     project_details.lib === "Pytorch" ||
     project_details.library === "Pytorch"
   ) {
-    var temp_pre_meta = {
+     temp_pre_meta = {
       dataset: {
         name: "dataset",
         type: {
@@ -420,7 +425,7 @@ function Step2() {
         // },
       },
     };
-    var temp_pre = {
+     temp_pre = {
       // is param in image processing?
       image: {
         params: {
@@ -529,7 +534,7 @@ function Step2() {
       csv: {},
       text: {},
     };
-    var temp_loss = {
+     temp_loss = {
       L1Loss: {
         name: "l1loss",
         type: "loss-function",
@@ -702,7 +707,7 @@ function Step2() {
         },
       },
     };
-    var temp_optimizer = {
+     temp_optimizer = {
       SGD: {
         name: "SGD",
         type: "optimizer",
@@ -893,7 +898,7 @@ function Step2() {
         },
       },
     };
-    var temp_json = {
+     temp_json = {
       Linear: {
         in_features: {
           Example: "3",
@@ -1243,7 +1248,7 @@ function Step2() {
     project_details.lib === "Keras" ||
     project_details.library === "Keras"
   ) {
-    var temp_json = {
+     temp_json = {
       Conv2D: {
         filters: {
           Example: 32,
@@ -1727,7 +1732,7 @@ function Step2() {
         },
       },
     };
-    var temp_loss = {
+     temp_loss = {
       L1Loss: {
         name: "l1loss",
         type: "loss-function",
@@ -1900,7 +1905,7 @@ function Step2() {
         },
       },
     };
-    var temp_optimizer = {
+     temp_optimizer = {
       SGD: {
         name: "SGD",
         type: "optimizer",
@@ -2091,7 +2096,7 @@ function Step2() {
         },
       },
     };
-    var temp_pre_meta = {
+     temp_pre_meta = {
       dataset: {
         name: "dataset",
         type: {
@@ -2112,7 +2117,7 @@ function Step2() {
         // },
       },
     };
-    var temp_pre = {
+     temp_pre = {
       image: {
         augment: {
           name: "augment",
@@ -2205,7 +2210,7 @@ function Step2() {
       csv: {},
       text: {},
     };
-    var hyper = {
+     hyper = {
       params: {
         name: "params",
         input_type: "all",
