@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, {useEffect } from "react";
 import _ from "lodash";
 import TextField from "@material-ui/core/TextField";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import Button from "@material-ui/core/Button";
-import axios from "axios";
 import fileDownload from "js-file-download";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { makeStyles, withStyles, useTheme } from "@material-ui/core/styles";
@@ -26,7 +25,6 @@ import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import MuiDialogContent from "@material-ui/core/DialogContent";
 import MuiDialogActions from "@material-ui/core/DialogActions";
 import CloseIcon from "@material-ui/icons/Close";
-import { CollectionsBookmarkOutlined, OpacitySharp } from "@material-ui/icons";
 import { Tooltip } from "@material-ui/core";
 
 const styles = (theme) => ({
@@ -278,13 +276,13 @@ function Step2() {
   const classes = useStyles();
   const theme = useTheme();
   var project_details = JSON.parse(localStorage.getItem("project_details"));
-  var json_data = JSON.parse(localStorage.getItem("json_data"));
   var username = JSON.parse(localStorage.getItem("username"));
   var token = JSON.parse(localStorage.getItem("token"));
 
   const [components, setcomponents] = React.useState([]);
   const [selected_layer_type, setselected_layer_type] = React.useState("");
   const [selected_layer, setselected_layer] = React.useState(-1);
+  //extra
   const [selected_layer_name, setselected_layer_name] = React.useState("");
   const [value, setValue] = React.useState(0);
   const [state_hyperparam, setstate_hyperparam] = React.useState({
@@ -303,6 +301,7 @@ function Step2() {
   const [selected_loss, setselected_loss] = React.useState({});
 
   const [openModal, setOpenModal] = React.useState(false);
+  //remove
   const [generated_file_path, setgenerated_file_path] = React.useState("");
 
 
@@ -397,8 +396,8 @@ function Step2() {
   };
 
   if (
-    project_details.lib === new String("Pytorch").valueOf() ||
-    project_details.library === new String("Pytorch").valueOf()
+    project_details.lib === "Pytorch" ||
+    project_details.library === "Pytorch"
   ) {
     var temp_pre_meta = {
       dataset: {
@@ -1241,8 +1240,8 @@ function Step2() {
       },
     };
   } else if (
-    project_details.lib === new String("Keras").valueOf() ||
-    project_details.library === new String("Keras").valueOf()
+    project_details.lib === "Keras" ||
+    project_details.library === "Keras"
   ) {
     var temp_json = {
       Conv2D: {
@@ -2360,12 +2359,12 @@ function Step2() {
       return;
     }
 
-    if (destination.droppableId === new String("source").valueOf()) {
+    if (destination.droppableId === "source") {
       return;
     }
     if (
       destination.droppableId === new String("delete").valueOf() &&
-      source.droppableId === new String("target").valueOf()
+      source.droppableId === "target"
     ) {
       const element = components[source.index];
       var temp = components.filter((item) => item !== element);
@@ -2375,8 +2374,8 @@ function Step2() {
       setselected_layer_type("");
     }
     if (
-      destination.droppableId === new String("target").valueOf() &&
-      source.droppableId === new String("target").valueOf()
+      destination.droppableId === "target" &&
+      source.droppableId === "target"
     ) {
       components.splice(
         destination.index,
@@ -2405,8 +2404,8 @@ function Step2() {
       setcomponents(components);
     }
     if (
-      destination.droppableId === new String("target").valueOf() &&
-      source.droppableId === new String("source").valueOf()
+      destination.droppableId === "target" &&
+      source.droppableId === "source"
     ) {
       const list_names_of_source = Object.keys(jsondata);
       const temp = jsondata[list_names_of_source[source.index]];
@@ -2482,7 +2481,7 @@ function Step2() {
     const temp = components;
     var dic = _.cloneDeep(temp);
     var i = 0;
-    if (project_details.lib === new String("Pytorch").valueOf()) {
+    if (project_details.lib === "Pytorch") {
       for (let [key0, value0] of Object.entries(dic)) {
         i = i + 1;
         for (var key1 in value0) {
@@ -2517,7 +2516,7 @@ function Step2() {
           }
         }
       }
-    } else if (project_details.lib === new String("Keras").valueOf()) {
+    } else if (project_details.lib === "Keras") {
       for (let [key0, value0] of Object.entries(dic)) {
         i = i + 1;
         for (var key1 in value0) {
@@ -2577,7 +2576,7 @@ function Step2() {
     var i = 0;
     var flag = true;
 
-    if (project_details.lib === new String("Keras").valueOf()) {
+    if (project_details.lib === "Keras") {
       for (let [key0, value0] of Object.entries(dic)) {
         i = i + 1;
         for (var key1 in value0) {
@@ -2610,7 +2609,7 @@ function Step2() {
   };
 
   const generate_hyper = () => {
-    if (project_details.lib === new String("Pytorch").valueOf()) {
+    if (project_details.lib === "Pytorch") {
       const final_dict = {};
       var i = 0;
       for (let [key0, value0] of Object.entries(selected_optimizer)) {
@@ -2711,6 +2710,7 @@ function Step2() {
         // handleToggle_backdrop(false);
         // setAllProjects([...res.data.projects]);
         setOpenModal(true);
+        //romove
         setgenerated_file_path(res.data.path);
       } else {
         // localStorage.clear();
@@ -2728,6 +2728,7 @@ function Step2() {
     };
     const res = await HomeService.download_code(token, data);
     if (res.status === 200) {
+      console.log(res.data);
       fileDownload(res.data, "test.py");
     }
   };
@@ -3311,7 +3312,7 @@ function Step2() {
           <Grid item lg={1} md={1} sm={1} xs={1}></Grid>
           <Grid item lg={10} md={10} sm={10} xs={10}>
             <Grid container>
-              {project_details.lib === new String("Pytorch").valueOf() ? (
+              {project_details.lib === "Pytorch" ? (
                 <>
                   <Grid item lg={12} md={12} sm={12} xs={12}>
                     <FormControl variant="outlined" className={classes._hyper}>
@@ -3635,7 +3636,7 @@ function Step2() {
                   </Select>
                 </FormControl>
 
-                {project_details.lib === new String("Pytorch").valueOf() ? (
+                {project_details.lib === "Pytorch" ? (
                   <FormControl variant="outlined" className={classes.sel}>
                     <InputLabel>metrics</InputLabel>
                     <Select
